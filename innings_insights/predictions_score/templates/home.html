@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block extra_head %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Innings Insights{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .hero {
+            background-color: #ffffff;
+            color: #343a40; 
+            padding: 30px 20px;
+            border-radius: 10px;
+            text-align: left;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div class="container mt-4">
+        <div class="hero">
+            <h1>Innings Insights for IPL</h1>
+            <p>Select an option below to get started:</p>
+            
+            <div class="mb-4">
+                <p><strong>Score Prediction for 1st Innings:</strong></p>
+                <p>Predict the score of the batting team in the 1st innings by providing the following details:</p>
+                <ul>
+                    <li><strong>Batting Team:</strong> Choose the team currently batting.</li>
+                    <li><strong>Bowling Team:</strong> Select the team currently bowling.</li>
+                    <li><strong>Current Score:</strong> Enter the runs scored so far.</li>
+                    <li><strong>Overs Completed:</strong> Specify the number of overs that have been bowled.</li>
+                    <li><strong>City:</strong> Indicate the city where the match is being played.</li>
+                    <li><strong>Wickets Out:</strong> Number of wickets that have fallen.</li>
+                    <li><strong>Runs in Last 5 Overs:</strong> Provide the total runs scored in the last five overs.</li>
+                </ul>
+                <p>Once you fill in these details, you can click the button below to predict the score.</p>
+                <a href="{% url 'projected_score' %}" class="btn btn-primary">Score Prediction</a>
+            </div>
+            
+            <div>
+                <p><strong>Win Prediction for 2nd Innings:</strong></p>
+                <p>Estimate the probability of winning a match by a team in the 2nd innings by providing the following details:</p>
+                <ul>
+                    <li><strong>Batting Team:</strong> Select the team currently batting.</li>
+                    <li><strong>Bowling Team:</strong> Select the team currently bowling.</li>
+                    <li><strong>City:</strong> Indicate the city where the match is being played.</li>
+                    <li><strong>Overs Completed:</strong> Enter the number of overs that have been bowled.</li>
+                    <li><strong>Wickets Out:</strong> Number of wickets that have fallen.</li>
+                    <li><strong>Target Score:</strong> Specify the target score set by the opposing team.</li>
+                </ul>
+                <p>After entering these details, click the button below to get the win prediction.</p>
+                <a href="{% url 'win_prediction' %}" class="btn btn-primary">Win Prediction</a>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+{% endblock %}

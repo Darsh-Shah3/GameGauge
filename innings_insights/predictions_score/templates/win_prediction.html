@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+{% block title %}Win Prediction{% endblock %}
+
+{% block content %}
+<h2 class="mb-4 text-center">Win Prediction</h2>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6"> 
+            <form method="POST" class="p-4 border rounded shadow-sm bg-light">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="batting_team">Batting Team</label>
+                    <select name="batting_team" class="form-control" required>
+                        <option value="" selected disabled>Select Batting Team</option>
+                        {% for team in teams %}
+                            <option value="{{ team }}">{{ team }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="bowling_team">Bowling Team</label>
+                    <select name="bowling_team" class="form-control" required>
+                        <option value="" selected disabled>Select Bowling Team</option>
+                        {% for team in teams %}
+                            <option value="{{ team }}">{{ team }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="city">City</label>
+                    <select name="city" class="form-control" required>
+                        <option value="" selected disabled>Select City</option>
+                        {% for city in cities %}
+                            <option value="{{ city }}">{{ city }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="target">Target Score</label>
+                    <input type="number" name="target" class="form-control" step="1" min="0" required>
+                </div>
+                <div class="form-group">
+                    <label for="current_score">Current Score</label>
+                    <input type="number" name="current_score" class="form-control" step="1" min="0" required>
+                </div>
+                <div class="form-group">
+                    <label for="overs_done">Overs Completed</label>
+                    <input type="number" name="overs_done" class="form-control" step="0.1" min="0" max="20" required>
+                </div>
+                <div class="form-group">
+                    <label for="wickets_out">Wickets Out</label>
+                    <input type="number" name="wickets_out" class="form-control" step="1" min="0" required>
+                </div>
+                <button type="submit" class="btn btn-primary mt-3 w-100">Win Probability</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% if win and loss %}
+<h3 class="mt-4 text-center">Prediction Results</h3>
+<div class="alert alert-success text-center">
+    {{ form.batting_team.value }} - {{ win }}% chance of winning
+</div>
+<div class="alert alert-danger text-center">
+    {{ form.bowling_team.value }} - {{ loss }}% chance of winning
+</div>
+{% endif %}
+
+<script>
+    document.getElementById('overs_done').addEventListener('change', function() {
+        let value = parseFloat(this.value);
+        if (value % 1 >= 0.6) {
+            let overs = Math.floor(value);  
+            this.value = (overs + 1).toFixed(1);  
+        }
+        if (value % 1 < 0.1 && value > 0) {
+            let overs = Math.floor(value);  
+            this.value = (overs - 0.4).toFixed(1);  
+        }
+    });
+</script>
+{% endblock %}
